@@ -17,7 +17,7 @@ body {
 /* Heading */
 h1 {
     font-family: 'Fondamento', cursive;
-    font-size: 60px;
+    font-size: clamp(30px, 8vw, 60px);
     background: radial-gradient(circle, #FFF8DC 0%, #FFD700 40%, #D1B200 70%, #B8860B 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -38,18 +38,18 @@ h1 {
 }
 .my-love {
     font-family: 'Fondamento', cursive;
-    font-size: 36px;
+    font-size: clamp(20px, 6vw, 36px);
     color: #C2185B;
     margin-bottom: 20px;
 }
 p {
-    font-size: 28px;
+    font-size: clamp(16px, 5vw, 28px);
     font-weight: bold;
 }
 button {
-    margin: 0 15px;
-    padding: 15px 30px;
-    font-size: 18px;
+    margin: 0 10px;
+    padding: clamp(8px,2.5vw,15px) clamp(12px,4vw,30px);
+    font-size: clamp(14px,4vw,18px);
     background: white;
     color: #C2185B;
     border: none;
@@ -105,9 +105,9 @@ button:hover { background: #ffb6c1; }
     z-index:10000;
     text-align:center;
 }
-.modal img { width:250px; border-radius:10px; }
+.modal img { width:250px; border-radius:10px; max-width:80vw; }
 .modal p {
-    font-size:24px;
+    font-size: clamp(16px,5vw,24px);
     color:#C2185B;
     margin-top:10px;
     font-weight:bold;
@@ -181,25 +181,31 @@ document.getElementById('yesBtn').addEventListener('click', ()=>{
     document.getElementById('yesModal').style.display='block';
 });
 
-// No button playful
+// No button playful downward and sideways
 const noBtn = document.getElementById('noBtn');
 let moveCount = 0;
-const originalPos = { left: noBtn.offsetLeft, top: noBtn.offsetTop };
+let origLeft = noBtn.offsetLeft;
+let origTop = noBtn.offsetTop;
 
 noBtn.addEventListener('mouseenter', ()=>{
     if(moveCount < 10){
-        const x = Math.random()*(window.innerWidth-noBtn.offsetWidth);
-        const y = Math.random()*(window.innerHeight-noBtn.offsetHeight);
-        noBtn.style.position='absolute';
-        noBtn.style.left = x+'px';
-        noBtn.style.top = y+'px';
+        noBtn.style.position = 'absolute';
+        let maxX = window.innerWidth - noBtn.offsetWidth - 20;
+        let maxY = window.innerHeight - noBtn.offsetHeight - 20;
+
+        let newLeft = Math.random() * maxX;
+        let newTop = noBtn.offsetTop + 30 + Math.random()*50; // move down only
+        if(newTop > maxY) newTop = maxY;
+
+        noBtn.style.left = newLeft+'px';
+        noBtn.style.top = newTop+'px';
         moveCount++;
     } else if(moveCount === 10){
-        // restore to original place
-        noBtn.style.position='relative';
-        noBtn.style.left='';
-        noBtn.style.top='';
-        moveCount++; // mark as ready for click
+        // restore original position after 10 moves
+        noBtn.style.position = 'relative';
+        noBtn.style.left = '';
+        noBtn.style.top = '';
+        moveCount++; // ready for click
     }
 });
 
