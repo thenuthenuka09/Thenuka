@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Fondamento&display=swap" rel="stylesheet">
+<title>Happy Valentines Day</title>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica', sans-serif;
+    overflow: hidden;
+    background: #ffb6c1;
+}
+
+/* Heading */
+h1 {
+    font-family: 'Fondamento', cursive;
+    font-size: 60px;
+    background: radial-gradient(circle, #FFF8DC 0%, #FFD700 40%, #D1B200 70%, #B8860B 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 1px black;
+    margin-bottom: 20px;
+    animation: blink 1s infinite;
+    z-index: 9999;
+    position: relative;
+}
+
+/* Container */
+.container {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding-top: 50px;
+    color: white;
+}
+.my-love {
+    font-family: 'Fondamento', cursive;
+    font-size: 36px;
+    color: #C2185B;
+    margin-bottom: 20px;
+}
+p {
+    font-size: 28px;
+    font-weight: bold;
+}
+button {
+    margin: 0 15px;
+    padding: 15px 30px;
+    font-size: 18px;
+    background: white;
+    color: #C2185B;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    position: relative;
+}
+button:hover { background: #ffb6c1; }
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    transform: rotate(-45deg);
+    animation: floatUp linear infinite;
+}
+.heart::before,
+.heart::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: inherit;
+    border-radius: 50%;
+}
+.heart::before { top: -10px; left: 0; }
+.heart::after { left: 10px; top: 0; }
+
+/* Blink animation */
+@keyframes blink {
+    0%,50%,100%{opacity:1;}
+    25%,75%{opacity:0;}
+}
+@keyframes floatUp {
+    0% { transform: translateY(100vh) rotate(-45deg); opacity: 0.5; }
+    100% { transform: translateY(-10vh) rotate(-45deg); opacity: 0.8; }
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    display:none;
+    z-index:10000;
+    text-align:center;
+}
+.modal img { width:250px; border-radius:10px; }
+.modal p {
+    font-size:24px;
+    color:#C2185B;
+    margin-top:10px;
+    font-weight:bold;
+}
+.modal button {
+    margin-top:15px;
+    padding:10px 20px;
+    font-size:18px;
+    border-radius:10px;
+    border:none;
+    font-weight:bold;
+    background:#C2185B;
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+.modal button:hover { background:#ff69b4; }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Happy Valentines Day</h1>
+    <div class="my-love">My Love 💖💖</div>
+    <p>Do you love me?</p>
+    <div>
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
+    </div>
+</div>
+
+<!-- Yes modal -->
+<div id="yesModal" class="modal">
+    <img src="https://media.tenor.com/Cp6Vfn_HBZ8AAAAM/jump-hug-milk-and-mocha.gif" alt="Milk & Mocha Hug">
+    <p>I love you புருசா 😘</p>
+    <button onclick="closeModal('yesModal')">Close & Exit</button>
+</div>
+
+<!-- No modal -->
+<div id="noModal" class="modal">
+    <img src="https://media.tenor.com/5iVv64OjO28AAAAM/milk-and-mocha-bear-couple.gif" alt="Milk & Mocha Couple">
+    <p>போடா முட்டகண்ணா 👊</p>
+    <button onclick="closeModal('noModal')">Exit</button>
+</div>
+
+<script>
+// Floating hearts
+const totalHearts = 100;
+const colors = ['#FF3B6D','#FF69B4','#FFC0CB','#FFFFFF'];
+for(let i=0;i<totalHearts;i++){
+    let heart = document.createElement('div');
+    heart.classList.add('heart');
+    let size = 10 + Math.random()*20;
+    heart.style.width = heart.style.height = size+'px';
+    heart.style.left = Math.random()*100+'%';
+    heart.style.animationDuration = (6+Math.random()*9)+'s';
+    heart.style.animationDelay = Math.random()*5+'s';
+    heart.style.background = colors[Math.floor(Math.random()*colors.length)];
+    heart.style.opacity = 0.4 + Math.random()*0.4;
+    document.body.appendChild(heart);
+}
+
+// Modal close function
+function closeModal(id){
+    document.getElementById(id).style.display='none';
+    window.open('','_self').close();
+}
+
+// Yes button
+document.getElementById('yesBtn').addEventListener('click', ()=>{
+    document.getElementById('yesModal').style.display='block';
+});
+
+// No button playful
+const noBtn = document.getElementById('noBtn');
+let moveCount = 0;
+const originalPos = { left: noBtn.offsetLeft, top: noBtn.offsetTop };
+
+noBtn.addEventListener('mouseenter', ()=>{
+    if(moveCount < 10){
+        const x = Math.random()*(window.innerWidth-noBtn.offsetWidth);
+        const y = Math.random()*(window.innerHeight-noBtn.offsetHeight);
+        noBtn.style.position='absolute';
+        noBtn.style.left = x+'px';
+        noBtn.style.top = y+'px';
+        moveCount++;
+    } else if(moveCount === 10){
+        // restore to original place
+        noBtn.style.position='relative';
+        noBtn.style.left='';
+        noBtn.style.top='';
+        moveCount++; // mark as ready for click
+    }
+});
+
+noBtn.addEventListener('click', ()=>{
+    if(moveCount > 10){ // only after playful ends
+        document.getElementById('noModal').style.display='block';
+    }
+});
+</script>
+
+</body>
+</html>
