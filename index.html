@@ -188,7 +188,7 @@ let origLeft = noBtn.offsetLeft;
 let origTop = noBtn.offsetTop;
 
 noBtn.addEventListener('mouseenter', ()=>{
-    if(moveCount < 5){
+    if(moveCount < 10){
         noBtn.style.position = 'absolute';
         let maxX = window.innerWidth - noBtn.offsetWidth - 20;
         let maxY = window.innerHeight - noBtn.offsetHeight - 20;
@@ -200,7 +200,7 @@ noBtn.addEventListener('mouseenter', ()=>{
         noBtn.style.left = newLeft+'px';
         noBtn.style.top = newTop+'px';
         moveCount++;
-    } else if(moveCount === 5){
+    } else if(moveCount === 10){
         // restore original position after 10 moves
         noBtn.style.position = 'relative';
         noBtn.style.left = '';
@@ -210,7 +210,7 @@ noBtn.addEventListener('mouseenter', ()=>{
 });
 
 noBtn.addEventListener('click', ()=>{
-    if(moveCount > 5){ // only after playful ends
+    if(moveCount > 10){ // only after playful ends
         document.getElementById('noModal').style.display='block';
     }
 });
