@@ -143,7 +143,7 @@ button:hover { background: #ffb6c1; }
 <div id="yesModal" class="modal">
     <img src="https://media.tenor.com/Cp6Vfn_HBZ8AAAAM/jump-hug-milk-and-mocha.gif" alt="Milk & Mocha Hug">
     <p>I love you புருசா 😘</p>
-    <button onclick="closeModal('yesModal')">Close & Exit</button>
+    <button onclick="closeModal('yesModal')">Exit</button>
 </div>
 
 <!-- No modal -->
@@ -188,7 +188,7 @@ let origLeft = noBtn.offsetLeft;
 let origTop = noBtn.offsetTop;
 
 noBtn.addEventListener('mouseenter', ()=>{
-    if(moveCount < 10){
+    if(moveCount < 5){
         noBtn.style.position = 'absolute';
         let maxX = window.innerWidth - noBtn.offsetWidth - 20;
         let maxY = window.innerHeight - noBtn.offsetHeight - 20;
@@ -200,8 +200,8 @@ noBtn.addEventListener('mouseenter', ()=>{
         noBtn.style.left = newLeft+'px';
         noBtn.style.top = newTop+'px';
         moveCount++;
-    } else if(moveCount === 10){
-        // restore original position after 10 moves
+    } else if(moveCount === 5){
+        // restore original position after 5 moves
         noBtn.style.position = 'relative';
         noBtn.style.left = '';
         noBtn.style.top = '';
@@ -210,7 +210,7 @@ noBtn.addEventListener('mouseenter', ()=>{
 });
 
 noBtn.addEventListener('click', ()=>{
-    if(moveCount > 10){ // only after playful ends
+    if(moveCount > 5){ // only after playful ends
         document.getElementById('noModal').style.display='block';
     }
 });
